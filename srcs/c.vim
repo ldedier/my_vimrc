@@ -10,4 +10,15 @@ function Main_c()
 	execute "r " . @b . "/templates/main.c"
 endfunction
 
-nmap <C-m> : call Main_c()<CR>
+function Include_perso()
+	execute "normal! i#include \"\""
+	execute "startinsert"
+endfunction
+
+function Include_sys()
+	execute "normal! i#include \<\>"
+	execute "startinsert"
+endfunction
+map <c-m> : call Main_c()<CR>
+map <c-i> : call Include_perso()<CR>
+map <s-i> : call Include_sys()<CR>

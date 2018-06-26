@@ -1,6 +1,7 @@
 let @a = $HOME . "/vimrc_repo/srcs/"
 let @b = $HOME . "/vimrc_repo"
 
+"srcs holds all the includes (.vim)
 let srcs = [
   \"stdheader.vim",
   \"wolf3d.vim",
@@ -14,6 +15,9 @@ endfor
 
 syntax on
 set number
+set norelativenumber
+set wrap
+set matchtime=10
 set ruler
 set cc=80
 set cul
@@ -44,4 +48,18 @@ function Skeletons()
 	endif
 endfunction
 
+function LineDown()
+	execute "normal! ddp"
+	echo "lol"
+endfunction
+
+"space will select a word in visual mode"
+map <space> viwye<right>
+"put a whole line down"
+map - ddp
+"put a whole line up"
+map _ ddkkp
+"Y behaves like D"
+map Y y$
 silent call Skeletons()
+
