@@ -1,0 +1,8 @@
++DONE
+-TO_ADD
+
+Command shortcuts:
+	+CTRL-M:	C main 
+	-CTRL-I:	include <>
+	-MAJ-I:		include ""
+	-CTR-R:		return()

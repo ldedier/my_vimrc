@@ -1,0 +1,47 @@
+let @a = $HOME . "/vimrc_repo/srcs/"
+let @b = $HOME . "/vimrc_repo"
+
+let srcs = [
+  \"stdheader.vim",
+  \"wolf3d.vim",
+  \"c.vim",
+  \"cpp.vim"
+  \]
+
+for src in srcs
+	exec "source " . @a . src
+endfor
+
+syntax on
+set number
+set ruler
+set cc=80
+set cul
+"Make the current line highlighted"
+hi CursorLine term=none cterm=none ctermbg=0
+
+function Is_new_file()
+	let myfile = expand('%:p')
+	if filereadable(myfile)
+		return 0
+	else
+		return 1
+	endif
+endfunction
+
+function Skeletons()
+	if (Is_new_file())
+		let extension = expand('%:e')
+		if (extension == "hpp")
+			call Skeleton_hpp()
+		elseif (extension == "h")
+			call Skeleton_h()
+		elseif (extension == "cpp")
+			call Skeleton_cpp()
+		elseif (extension == "c")
+			call Skeleton_c()
+		endif
+	endif
+endfunction
+
+silent call Skeletons()
