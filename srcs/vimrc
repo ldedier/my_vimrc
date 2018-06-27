@@ -54,12 +54,26 @@ function LineDown()
 endfunction
 
 "space will select a word in visual mode"
-map <space> viwye<right>
+noremap <space> viwye<right>
+
 "put a whole line down"
-map - ddp
+noremap - ddp
+
 "put a whole line up"
-map _ ddkkp
+noremap _ ddkkp
+
 "Y behaves like D"
-map Y y$
+noremap Y y$
+
+"delete line in insert mode with ctrl-d"
+inoremap <c-d> <esc>ddi
+
+"upper case current world in normal mode with ctrl-u"
+nnoremap <c-u> viwUe
+
+"clear current line with cc in "
+nnoremap cc O<esc>jddk
+
+inoremap <c-s> <esc>o
 silent call Skeletons()
 

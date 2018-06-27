@@ -19,6 +19,11 @@ function Include_sys()
 	execute "normal! i#include \<\>"
 	execute "startinsert"
 endfunction
-map <c-m> : call Main_c()<CR>
-map <c-i> : call Include_perso()<CR>
-map <s-i> : call Include_sys()<CR>
+
+nnoremap <c-m> :call Main_c()<CR>
+nnoremap <c-i> :call Include_perso()<CR>
+nnoremap <s-i> :call Include_sys()<CR>
+
+inoremap <c-i> if ()<left>
+inoremap <c-e> else if ()<left>
+inoremap <c-r> return ();<left><left>
