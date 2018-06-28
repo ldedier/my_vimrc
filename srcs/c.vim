@@ -11,7 +11,7 @@ function Main_c()
 endfunction
 
 function Include_perso()
-	execute "normal! i#include \"\""
+	execute "normal! i#include \"\<right>\""
 	execute "startinsert"
 endfunction
 

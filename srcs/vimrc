@@ -24,6 +24,9 @@ set cul
 "Make the current line highlighted"
 hi CursorLine term=none cterm=none ctermbg=0
 
+let mapleader = ","
+let maplocalleader = "\\"
+
 function Is_new_file()
 	let myfile = expand('%:p')
 	if filereadable(myfile)
@@ -65,15 +68,39 @@ noremap _ ddkkp
 "Y behaves like D"
 noremap Y y$
 
+"L goes to the end of line"
+noremap L $
+
+"H goes to the stard of line"
+noremap H 0
+
 "delete line in insert mode with ctrl-d"
 inoremap <c-d> <esc>ddi
 
 "upper case current world in normal mode with ctrl-u"
 nnoremap <c-u> viwUe
 
-"clear current line with cc in "
+"clear current line"
 nnoremap cc O<esc>jddk
 
+"go down with a brand new line"
 inoremap <c-s> <esc>o
+
+"go to .vimrc"
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+"include vimrc"
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+nnoremap " viw<esc>a"<esc>bi"<esc>lel
+nnoremap ( viw<esc>a)<esc>bi(<esc>lel
+
+iabbrev ldd ldedier@student.42.fr
+iabbrev ii int i;<esc>o
+iabbrev cc char c;<esc>o
+iabbrev c* char *str;<esc>o
+
+vnoremap " <esc>`<i"<esc>`>a"<esc>l
+
 silent call Skeletons()
 
