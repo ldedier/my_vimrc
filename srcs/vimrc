@@ -102,5 +102,41 @@ iabbrev c* char *str;<esc>o
 
 vnoremap " <esc>`<i"<esc>`>a"<esc>l
 
-silent call Skeletons()
+"inoremap jk <esc>
+"
+"inoremap <up> <nop>
+"inoremap <right> <nop>
+"inoremap <left> <nop>
+"inoremap <esc> <nop>
 
+"nnoremap <right> <nop>
+"nnoremap <up> <nop>
+"nnoremap <right> <nop>
+"nnoremap <down> <nop>
+
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
+
+autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+autocmd FileType python     nnoremap <buffer> <localleader>c I#<esc>
+autocmd FileType c     nnoremap <buffer> <localleader>c I//<esc>
+autocmd FileType cpp     nnoremap <buffer> <localleader>c I//<esc>
+
+autocmd FileType python     :iabbrev <buffer> iff if:<left>
+autocmd FileType javascript :iabbrev <buffer> iff if ()<left>
+autocmd FileType cpp :iabbrev <buffer> iff if ()<left>
+autocmd FileType c :iabbrev <buffer> iff if ()<left>
+
+augroup testgroup
+    autocmd BufWrite * :echom "Foo"
+    autocmd BufWrite * :echom "Bar"
+augroup END
+
+augroup testgroup
+	autocmd!
+    autocmd BufWrite * :echom "Baz"
+augroup END
+
+silent call Skeletons()
