@@ -3,9 +3,7 @@ function Get_hpp_header()
 endfunction
 
 function Skeleton_hpp()
-	let list = split(expand('%:t'), '\.')
-	put = list
-	"	+ expand('%:p')
+	let listf = split(expand('%:t'), '\.')
 endfunction
 
 function Skeleton_cpp()

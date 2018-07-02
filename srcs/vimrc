@@ -21,35 +21,12 @@ set matchtime=10
 set ruler
 set cc=80
 set cul
+
 "Make the current line highlighted"
 hi CursorLine term=none cterm=none ctermbg=0
 
 let mapleader = ","
 let maplocalleader = "\\"
-
-function Is_new_file()
-	let myfile = expand('%:p')
-	if filereadable(myfile)
-		return 0
-	else
-		return 1
-	endif
-endfunction
-
-function Skeletons()
-	if (Is_new_file())
-		let extension = expand('%:e')
-		if (extension == "hpp")
-			call Skeleton_hpp()
-		elseif (extension == "h")
-			call Skeleton_h()
-		elseif (extension == "cpp")
-			call Skeleton_cpp()
-		elseif (extension == "c")
-			call Skeleton_c()
-		endif
-	endif
-endfunction
 
 function LineDown()
 	execute "normal! ddp"
@@ -95,7 +72,6 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap " viw<esc>a"<esc>bi"<esc>lel
 nnoremap ( viw<esc>a)<esc>bi(<esc>lel
 
-iabbrev ldd ldedier@student.42.fr
 iabbrev ii int i;<esc>o
 iabbrev cc char c;<esc>o
 iabbrev c* char *str;<esc>o
@@ -103,7 +79,7 @@ iabbrev c* char *str;<esc>o
 vnoremap " <esc>`<i"<esc>`>a"<esc>l
 
 "inoremap jk <esc>
-"
+
 "inoremap <up> <nop>
 "inoremap <right> <nop>
 "inoremap <left> <nop>
@@ -124,19 +100,29 @@ autocmd FileType python     nnoremap <buffer> <localleader>c I#<esc>
 autocmd FileType c     nnoremap <buffer> <localleader>c I//<esc>
 autocmd FileType cpp     nnoremap <buffer> <localleader>c I//<esc>
 
-autocmd FileType python     :iabbrev <buffer> iff if:<left>
-autocmd FileType javascript :iabbrev <buffer> iff if ()<left>
-autocmd FileType cpp :iabbrev <buffer> iff if ()<left>
-autocmd FileType c :iabbrev <buffer> iff if ()<left>
+function Eatchar(pat)
+	let c = nr2char(getchar(0))
+	return (c =~ a:pat) ? '' : c
+endfunction
 
-augroup testgroup
-    autocmd BufWrite * :echom "Foo"
-    autocmd BufWrite * :echom "Bar"
+inoremap { {}<left><CR><up><esc>o
+
+augroup filetype_c
+    autocmd BufNewFile *.c :call Skeleton_c()
+    autocmd FileType c :nnoremap <S-m> :call Main_c()<CR>
+	autocmd FileType c :iabbrev <silent> icc <esc>:call Include_perso()<CR><C-R>=Eatchar('\s')<CR>
+	autocmd FileType c :iabbrev <silent> ics <esc>:call Include_sys()<CR><C-R>=Eatchar('\s')<CR>
+	autocmd FileType c :iabbrev <silent> rett return ();<Left><Left><C-R>=Eatchar('\s')<CR>
+	autocmd FileType c :iabbrev <silent> iff if ()<Left><C-R>=Eatchar('\s')<CR>
+	autocmd FileType c :iabbrev <silent> eliff else if ()<Left><C-R>=Eatchar('\s')<CR>
 augroup END
 
-augroup testgroup
-	autocmd!
-    autocmd BufWrite * :echom "Baz"
+augroup filetype_cpp
+	autocmd BufNewFile *.cpp :call Skeleton_cpp()
+    autocmd FileType cpp :nnoremap <S-m> :call Main_c()<CR>
+	autocmd FileType cpp :iabbrev <silent> icc <esc>:call Include_perso()<CR><C-R>=Eatchar('\s')<CR>
+	autocmd FileType cpp :iabbrev <silent> ics <esc>:call Include_sys()<CR><C-R>=Eatchar('\s')<CR>
+	autocmd FileType cpp :iabbrev <silent> rett return ();<Left><Left><C-R>=Eatchar('\s')<CR>
+	autocmd FileType cpp :iabbrev <silent> iff if ()<Left><C-R>=Eatchar('\s')<CR>
+	autocmd FileType cpp :iabbrev <silent> eliff else if ()<Left><C-R>=Eatchar('\s')<CR>
 augroup END
-
-silent call Skeletons()
