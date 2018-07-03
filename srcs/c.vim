@@ -1,5 +1,11 @@
 function Skeleton_h()
 	execute "StdHead2"
+	let ok = @f
+	let maj_def = join(split(toupper(@f), '\.'), '_')
+	put ='#ifndef '. maj_def
+	put ='# define '. maj_def
+	execute "normal! o#endif\<up>\<esc>o\<cr>"
+	execute "startinsert"
 endfunction
 
 function Skeleton_c()
@@ -7,7 +13,7 @@ function Skeleton_c()
 endfunction
 
 function Main_c()
-	execute "r " . @b . "/templates/main.c"
+	execute "r " . @t . "main.c"
 	execute "normal! \<down>\<down>\<down>o\<cr>"
 	execute "startinsert"
 	execute "normal! i\<tab>"

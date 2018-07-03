@@ -1,5 +1,7 @@
 let @a = $HOME . "/vimrc_repo/srcs/"
-let @b = $HOME . "/vimrc_repo"
+let @t = $HOME . "/vimrc_repo/templates/"
+let @f = expand('%:t')
+let @e = expand('%:e')
 
 "srcs holds all the includes (.vim)
 let srcs = [
@@ -95,11 +97,6 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
-autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
-autocmd FileType python     nnoremap <buffer> <localleader>c I#<esc>
-autocmd FileType c     nnoremap <buffer> <localleader>c I//<esc>
-autocmd FileType cpp     nnoremap <buffer> <localleader>c I//<esc>
-
 function Eatchar(pat)
 	let c = nr2char(getchar(0))
 	return (c =~ a:pat) ? '' : c
@@ -107,9 +104,12 @@ endfunction
 
 inoremap { {}<left><CR><up><esc>o
 
+
 augroup filetype_c
     autocmd BufNewFile *.c :call Skeleton_c()
+    autocmd BufNewFile *.h :call Skeleton_h()
     autocmd FileType c :nnoremap <S-m> :call Main_c()<CR>
+	autocmd FileType c :nnoremap <leader>c I//<esc>
 	autocmd FileType c :iabbrev <silent> icc <esc>:call Include_perso()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType c :iabbrev <silent> ics <esc>:call Include_sys()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType c :iabbrev <silent> rett return ();<Left><Left><C-R>=Eatchar('\s')<CR>
@@ -119,10 +119,13 @@ augroup END
 
 augroup filetype_cpp
 	autocmd BufNewFile *.cpp :call Skeleton_cpp()
+	autocmd BufNewFile *.hpp :call Skeleton_hpp()
     autocmd FileType cpp :nnoremap <S-m> :call Main_c()<CR>
+	autocmd FileType cpp :nnoremap <leader>c I//<esc>
 	autocmd FileType cpp :iabbrev <silent> icc <esc>:call Include_perso()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType cpp :iabbrev <silent> ics <esc>:call Include_sys()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType cpp :iabbrev <silent> rett return ();<Left><Left><C-R>=Eatchar('\s')<CR>
 	autocmd FileType cpp :iabbrev <silent> iff if ()<Left><C-R>=Eatchar('\s')<CR>
 	autocmd FileType cpp :iabbrev <silent> eliff else if ()<Left><C-R>=Eatchar('\s')<CR>
 augroup END
+
