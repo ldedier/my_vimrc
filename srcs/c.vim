@@ -19,12 +19,12 @@ function Main_c()
 	execute "normal! i\<tab>"
 endfunction
 
-function Include_perso()
+function Include_perso_c()
 	execute "normal! i#include \"\.h\"\<left>\<left>"
 	execute "startinsert"
 endfunction
 
-function Include_sys()
+function Include_sys_c()
 	execute "normal! i#include \<\.h\>\<left>\<left>"
 	execute "startinsert"
 endfunction
