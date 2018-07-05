@@ -1,7 +1,6 @@
 function Skeleton_h()
 	execute "StdHead2"
-	let ok = @f
-	let maj_def = join(split(toupper(@f), '\.'), '_')
+	let maj_def = join(split(toupper(@%), '\.'), '_')
 	put ='#ifndef '. maj_def
 	put ='# define '. maj_def
 	execute "normal! o#endif\<up>\<esc>o\<cr>"

@@ -1,6 +1,5 @@
 let @a = $HOME . "/vimrc_repo/srcs/"
 let @t = $HOME . "/vimrc_repo/templates/"
-let @f = expand('%:t')
 let @e = expand('%:e')
 
 "srcs holds all the includes (.vim)

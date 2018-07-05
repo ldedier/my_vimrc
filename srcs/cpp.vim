@@ -10,7 +10,7 @@ function Include_sys_cpp()
 endfunction
 
 function PutClass()
-	let name = split(@f, '\.')[0]
+	let name = split(@%, '\.')[0]
 	put ='class '. name
 	execute "normal! o{"
 	execute "normal! opublic:"
@@ -22,8 +22,8 @@ function PutClass()
 endfunction
 
 function Skeleton_hpp_class()
-	execute "StdHead2"
-	let maj_def = join(split(toupper(@f), '\.'), '_')
+	"execute "StdHead2"
+	let maj_def = join(split(toupper(@%), '\.'), '_')
 	put ='#ifndef ' . maj_def
 	put ='# define ' . maj_def
 
@@ -33,6 +33,14 @@ function Skeleton_hpp_class()
 endfunction
 
 function Skeleton_cpp_class()
+	"execute "StdHead2"
+	let name = split(@%, '\.')[0]
+	execute "normal! o#include \"" . name . ".hpp\""
+	execute "vsplit " . name . ".hpp"
+	silent execute "grep \".*(.*)\" %"
+	silent execute "copen"
+	silent execute "cc"
+	"execute "normal! yy\<C-W>\<C-W>p"
 endfunction
 
 function Skeleton_cpp()
