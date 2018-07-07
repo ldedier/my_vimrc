@@ -29,17 +29,22 @@ function Skeleton_hpp_class()
 	execute "startinsert"
 endfunction
 
-function Add_cpp_func_by_prototype()
+function Add_cpp_func_by_prototype(name, first)
 	let str = @0
-	let str = substitute(str, '	', '', 'g')
+	"let str = substitute(str, '^\t*\(static\)\?', '', "gm")
+	"let str = substitute(str, '^\t*\(static\)\?\t*', '', "gm")
+	let str = substitute(str, '^\t*\(static\)\?\(\t\|\ \)*', '', "gm")
+	let str = substitute(str, '[A-Za-z_0-9\-~]*(.*)', a:name . '::\0', "gm")
+	let str = substitute(str, ';\n', '\n{\n\t\n}\n', "gm")
 	execute "normal! o" . str
+	execute "normal! \<up>\<up>\<Del>\<down>\<down>"
 endfunction
 
 function Skeleton_cpp_class()
-	"execute "StdHead2"
+	execute "StdHead2"
 	let name = split(@%, '\.')[0]
 	let start = line(".")
-	execute "normal! o#include \"" . name . ".hpp\""
+	execute "normal! o#include \"" . name . ".hpp\"\<esc>o"
 	execute "vsplit " . name . ".hpp"
 	silent! execute "/.*(.*).*;"
 	let first = line(".")
@@ -48,14 +53,16 @@ function Skeleton_cpp_class()
 		return
 	endif
 	execute "normal! yy\<C-W>\<C-W>"
-	call Add_cpp_func_by_prototype()
+	call Add_cpp_func_by_prototype(name, 1)
 	execute "normal! \<C-W>\<C-W>n"
 	while line(".") != first
 		execute "normal! yy\<C-W>\<C-W>"
-		call Add_cpp_func_by_prototype()
+		call Add_cpp_func_by_prototype(name, 0)
 		execute "normal! \<C-W>\<C-W>n"
 	endwhile
 	q
+	execute "normal! dd17gg"
+	execute "startinsert"
 endfunction
 
 function Skeleton_cpp()
