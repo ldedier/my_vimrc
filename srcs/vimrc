@@ -21,8 +21,10 @@ set wrap
 set matchtime=10
 set ruler
 set cc=80
-set cul
-
+set tabstop=4
+set shiftwidth=4
+set autoindent
+set smartindent
 "Make the current line highlighted"
 hi CursorLine term=none cterm=none ctermbg=0
 
@@ -96,16 +98,15 @@ function Eatchar(pat)
 	return (c =~ a:pat) ? '' : c
 endfunction
 
-inoremap { {}<left><CR><up><esc>o
-
-
 augroup filetype_c
-    autocmd BufNewFile *.c :call Skeleton_c()
-    autocmd BufNewFile *.h :call Skeleton_h()
-    autocmd FileType c :nnoremap <S-m> :call Main_c()<CR>
+	autocmd BufNewFile *.c :call Skeleton_c()
+	autocmd BufNewFile *.h :call Skeleton_h()
+	autocmd FileType c :nnoremap <S-m> :call Main_c()<CR>
 	autocmd FileType c :nnoremap <leader>c I//<esc>
 	autocmd FileType c :iabbrev <silent> icc <esc>:call Include_perso_c()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType c :iabbrev <silent> ics <esc>:call Include_sys_c()<CR><C-R>=Eatchar('\s')<CR>
+	autocmd FileType h :iabbrev <silent> icc <esc>:call Include_perso_c()<CR><C-R>=Eatchar('\s')<CR>
+	autocmd FileType h :iabbrev <silent> ics <esc>:call Include_sys_c()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType c :iabbrev <silent> rett return ();<Left><Left><C-R>=Eatchar('\s')<CR>
 	autocmd FileType c :iabbrev <silent> iff if ()<Left><C-R>=Eatchar('\s')<CR>
 	autocmd FileType c :iabbrev <silent> eliff else if ()<Left><C-R>=Eatchar('\s')<CR>
@@ -114,8 +115,10 @@ augroup END
 augroup filetype_cpp
 	autocmd BufNewFile [A-Z]*.cpp :call Skeleton_cpp_class()
 	autocmd BufNewFile [A-Z]*.hpp :call Skeleton_hpp_class()
-    autocmd FileType cpp :nnoremap <S-m> :call Main_c()<CR>
+	autocmd FileType cpp :nnoremap <S-m> :call Main_c()<CR>
 	autocmd FileType cpp :nnoremap <leader>c I//<esc>
+	autocmd FileType hpp :iabbrev <silent> icc <esc>:call Include_perso_cpp()<CR><C-R>=Eatchar('\s')<CR>
+	autocmd FileType hpp :iabbrev <silent> ics <esc>:call Include_sys_cpp()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType cpp :iabbrev <silent> icc <esc>:call Include_perso_cpp()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType cpp :iabbrev <silent> ics <esc>:call Include_sys_cpp()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType cpp :iabbrev <silent> rett return ();<Left><Left><C-R>=Eatchar('\s')<CR>

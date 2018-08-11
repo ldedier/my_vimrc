@@ -13,9 +13,9 @@ function PutClass()
 	put ='class '. name
 	execute "normal! o{"
 	execute "normal! opublic:"
-	execute "normal! o" . name . "();"
+	execute "normal! o\<tab>" . name . "();"
 	execute "normal! o~" . name . "();"
-	execute "normal! oprivate:"
+	execute "normal! o\<bs>private:"
 	execute "normal! o};\<esc>\<up>o\<tab>"
 endfunction
 
@@ -33,8 +33,8 @@ function Add_cpp_func_by_prototype(name, first)
 	let str = @0
 	"let str = substitute(str, '^\t*\(static\)\?', '', "gm")
 	"let str = substitute(str, '^\t*\(static\)\?\t*', '', "gm")
-	let str = substitute(str, '^\t*\(static\)\?\(\t\|\ \)*', '', "gm")
-	let str = substitute(str, '[A-Za-z_0-9\-~]*(.*)', a:name . '::\0', "gm")
+	let str = substitute(str, '^\t*\(static\)\?\(\t\|\ \)*', '', "gm") "deleting tabs and static
+	let str = substitute(str, '[A-Za-z_0-9\-~]*(.*)', a:name . '::\0', "gm") "putting Classname:: before func
 	let str = substitute(str, ';\n', '\n{\n\t\n}\n', "gm")
 	execute "normal! o" . str
 	execute "normal! \<up>\<up>\<Del>\<down>\<down>"
@@ -61,7 +61,7 @@ function Skeleton_cpp_class()
 		execute "normal! \<C-W>\<C-W>n"
 	endwhile
 	q
-	execute "normal! dd17gg"
+	execute "normal! dd17gga"
 	execute "startinsert"
 endfunction
 
