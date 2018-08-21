@@ -65,6 +65,15 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 "include vimrc"
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
+
+"delete all number at begin of lines"
+
+function Clean_copy_paste()
+	execute ":%s/^\\(\\ \\|\\t\\)*[0-9]\\+"
+	execute "normal! gg=G"
+endfunction
+nnoremap <leader>cp :call Clean_copy_paste()<cr>
+
 nnoremap " viw<esc>a"<esc>bi"<esc>lel
 nnoremap ( viw<esc>a)<esc>bi(<esc>lel
 
@@ -91,13 +100,11 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
+
 function Eatchar(pat)
 	let c = nr2char(getchar(0))
 	return (c =~ a:pat) ? '' : c
 endfunction
-
-inoremap { {}<left><CR><up><esc>o
-
 
 augroup filetype_c
     autocmd BufNewFile *.c :call Skeleton_c()
