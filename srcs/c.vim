@@ -18,6 +18,13 @@ function Main_c()
 	execute "normal! i\<tab>"
 endfunction
 
+function Leaks_c()
+	execute "r " . @t . "leaks.c"
+	execute "normal! \<down>\<down>\<down>o\<cr>"
+	execute "startinsert"
+endfunction
+
+
 function Include_perso_c()
 	execute "normal! i#include \"\.h\"\<left>\<left>"
 	execute "startinsert"

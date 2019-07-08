@@ -25,6 +25,8 @@ set tabstop=4
 set shiftwidth=4
 set autoindent
 set smartindent
+set hlsearch
+
 "Make the current line highlighted"
 hi CursorLine term=none cterm=none ctermbg=0
 
@@ -67,12 +69,18 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 "include vimrc"
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
-nnoremap " viw<esc>a"<esc>bi"<esc>lel
-nnoremap ( viw<esc>a)<esc>bi(<esc>lel
 
-iabbrev ii int i;<esc>o
-iabbrev cc char c;<esc>o
-iabbrev c* char *str;<esc>o
+"delete all number at begin of lines"
+
+function Clean_copy_paste()
+	execute ":%s/^\\(\\ \\|\\t\\)*[0-9]\\+"
+	execute "normal! gg=G"
+endfunction
+
+nnoremap <leader>cp :call Clean_copy_paste()<cr>
+
+"nnoremap " viw<esc>a"<esc>bi"<esc>lel
+nnoremap ( viw<esc>a)<esc>bi(<esc>lel
 
 vnoremap " <esc>`<i"<esc>`>a"<esc>l
 
@@ -102,7 +110,7 @@ augroup filetype_c
 	autocmd BufNewFile *.c :call Skeleton_c()
 	autocmd BufNewFile *.h :call Skeleton_h()
 	autocmd FileType c :nnoremap <S-m> :call Main_c()<CR>
-	autocmd FileType c :nnoremap <leader>c I//<esc>
+	autocmd FileType c :nnoremap <leader>; :call Leaks_c()<CR>
 	autocmd FileType c :iabbrev <silent> icc <esc>:call Include_perso_c()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType c :iabbrev <silent> ics <esc>:call Include_sys_c()<CR><C-R>=Eatchar('\s')<CR>
 	autocmd FileType h :iabbrev <silent> icc <esc>:call Include_perso_c()<CR><C-R>=Eatchar('\s')<CR>
@@ -113,8 +121,8 @@ augroup filetype_c
 augroup END
 
 augroup filetype_cpp
-	autocmd BufNewFile [A-Z]*.cpp :call Skeleton_cpp_class()
-	autocmd BufNewFile [A-Z]*.hpp :call Skeleton_hpp_class()
+	autocmd BufNewFile [A-Z]([A-Z]|[a-z])*.cpp :call Skeleton_cpp_class()
+	autocmd BufNewFile [A-Z]([A-Z]|[a-z])*.hpp :call Skeleton_hpp_class()
 	autocmd FileType cpp :nnoremap <S-m> :call Main_c()<CR>
 	autocmd FileType cpp :nnoremap <leader>c I//<esc>
 	autocmd FileType hpp :iabbrev <silent> icc <esc>:call Include_perso_cpp()<CR><C-R>=Eatchar('\s')<CR>
