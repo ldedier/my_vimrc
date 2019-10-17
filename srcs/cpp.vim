@@ -52,6 +52,7 @@ function Skeleton_cpp_class()
 	let name = split(@%, '\.')[0]
 	let filename = join(split(@%, '\.')[0:-2], ".") . ".hpp"
 	let start = line(".")
+	execute "normal! o#include <iostream>"
 	execute "normal! o#include \"" . filename . "\"\<esc>o"
 	execute "vsplit " . filename
 	silent! execute "/.*(.*).*;"
@@ -69,7 +70,7 @@ function Skeleton_cpp_class()
 		execute "normal! \<C-W>\<C-W>n"
 	endwhile
 	q
-	execute "normal! dd17gga"
+	execute "normal! dd18gga"
 	execute "startinsert!"
 endfunction
 
